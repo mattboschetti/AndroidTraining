@@ -1,5 +1,8 @@
 package com.example.training01;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,64 +18,68 @@ public class LoginActivity extends Activity {
 
 	private int started;
 	private int stopped;
-	private static final String USER_KEY = "user_key";
-	private static final String PWD_KEY = "pwd_key";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		started = 1;
+		stopped = 1;
+		
 		findViewById(R.id.btnOk).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				EditText txtUser = (EditText) findViewById(R.id.txtUser);
-				EditText txtPwd = (EditText) findViewById(R.id.txtPassword);
-				String user = txtUser.getText() != null ? txtUser.getText().toString() : "Bazinga";
-				String pwd = txtPwd.getText() != null ? txtPwd.getText().toString() : "Pwd";
+				String user = getEditTextFieldValue(R.id.txtUser);
+				String pwd = getEditTextFieldValue(R.id.txtPassword);
 				
 				saveUserAndPassword(user, pwd);
 				
 				Intent detailsIntent = new Intent(getBaseContext(), Details.class);
-				detailsIntent.putExtra("user", user);
-				detailsIntent.putExtra("pwd", pwd);
+				detailsIntent.putExtra(LoginUtils.USER_KEY, user);
+				detailsIntent.putExtra(LoginUtils.PASSWORD_KEY, pwd);
 				startActivity(detailsIntent);
 				finish();
 			}
 		});
-		started = 1;
-		stopped = 1;
+	}
+	
+	private String getEditTextFieldValue(int id) {
+		EditText editText = (EditText) findViewById(id);
+		return editText.getText() != null ? editText.getText().toString() : "";
+	}
+	
+	private void setEditTextFieldValue(int id, String value) {
+		EditText txtUser = (EditText) findViewById(id);
+		txtUser.setText(value);
 	}
 	
 	private void fillUserAndPasswordControls() {
-		String[] userAndPassword = loadUserAndPassword();
-		EditText txtUser = (EditText) findViewById(R.id.txtUser);
-		txtUser.setText(userAndPassword[0]);
-		EditText txtPwd = (EditText) findViewById(R.id.txtPassword);
-		txtPwd.setText(userAndPassword[1]);	
+		Map<String, String> userAndPassword = loadUserAndPassword();
+		setEditTextFieldValue(R.id.txtUser, userAndPassword.get(LoginUtils.USER_KEY));
+		setEditTextFieldValue(R.id.txtPassword, userAndPassword.get(LoginUtils.PASSWORD_KEY));
 	}
 	
 	private void saveUserAndPassword(String user, String pwd) {
 		Editor editor = getPreferences(MODE_PRIVATE).edit();
-		editor.putString(USER_KEY, user);
-		editor.putString(PWD_KEY, pwd);
+		editor.putString(LoginUtils.USER_KEY, user);
+		editor.putString(LoginUtils.PASSWORD_KEY, pwd);
 		editor.apply();
-		Toast.makeText(getApplicationContext(), "Saved!", Toast.LENGTH_SHORT).show();
 	}
 	
 	private boolean isUserDataAlreadySaved() {
 		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-		return sharedPreferences.contains(USER_KEY) && sharedPreferences.contains(PWD_KEY);
+		return sharedPreferences.contains(LoginUtils.USER_KEY) && sharedPreferences.contains(LoginUtils.PASSWORD_KEY);
 	}
 	
-	private String[] loadUserAndPassword() {
+	private Map<String, String> loadUserAndPassword() {
 		SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
 
-		String[] response = new String[2];
-		response[0] = sharedPreferences.getString(USER_KEY, "user");
-		response[1] = sharedPreferences.getString(PWD_KEY, "pwd");
-		return response;
+		Map<String, String> data = new HashMap<String, String>();
+		data.put(LoginUtils.USER_KEY, sharedPreferences.getString(LoginUtils.USER_KEY, "user"));
+		data.put(LoginUtils.PASSWORD_KEY, sharedPreferences.getString(LoginUtils.PASSWORD_KEY, "pwd"));
+		return data;
 	}
 	
 	@Override
@@ -88,10 +95,7 @@ public class LoginActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "Started " + started + " times", Toast.LENGTH_SHORT).show();
 		started++;
 		
-		if (isUserDataAlreadySaved()) {
-			fillUserAndPasswordControls();
-			Toast.makeText(getApplicationContext(), "Loaded!", Toast.LENGTH_SHORT).show();
-		}
+		if (isUserDataAlreadySaved()) fillUserAndPasswordControls();
 	}
 	
 	@Override

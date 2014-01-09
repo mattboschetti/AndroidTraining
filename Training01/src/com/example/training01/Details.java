@@ -15,8 +15,8 @@ public class Details extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 		
-		String user = getIntent().getExtras().getString("user");
-		String pwd = getIntent().getExtras().getString("pwd");
+		String user = getIntent().getExtras().getString(LoginUtils.USER_KEY);
+		String pwd = getIntent().getExtras().getString(LoginUtils.PASSWORD_KEY);
 		
 		TextView welcomeMessage = (TextView) findViewById(R.id.viewDetailsContent);
 		welcomeMessage.setText("Bem vindo, " + user);

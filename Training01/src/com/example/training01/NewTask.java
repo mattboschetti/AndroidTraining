@@ -14,8 +14,7 @@ public class NewTask extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_task);
-		
-		
+
 		findViewById(R.id.button_save_activity).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
