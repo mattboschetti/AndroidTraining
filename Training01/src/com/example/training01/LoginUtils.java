@@ -5,4 +5,6 @@ public class LoginUtils {
 	public static final String USER_KEY= "user_key";
 	public static final String PASSWORD_KEY= "password_key";
 	
+	public static final String USER_DETAILS_FILE = "user_details_file";
+	
 }
