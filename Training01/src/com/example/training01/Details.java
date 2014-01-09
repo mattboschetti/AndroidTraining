@@ -27,7 +27,7 @@ public class Details extends Activity {
 		findViewById(R.id.buttonAdicionarAtividades).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intentNovaActivity = new Intent(getBaseContext(), NovaAtividade.class);
+				Intent intentNovaActivity = new Intent(getBaseContext(), NewTask.class);
 				startActivity(intentNovaActivity);
 			}
 		});

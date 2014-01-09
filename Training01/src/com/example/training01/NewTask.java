@@ -8,12 +8,12 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class NovaAtividade extends Activity {
+public class NewTask extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_nova_atividade);
+		setContentView(R.layout.activity_new_task);
 		
 		
 		findViewById(R.id.button_save_activity).setOnClickListener(new OnClickListener() {
