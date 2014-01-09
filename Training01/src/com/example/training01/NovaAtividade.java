@@ -24,6 +24,11 @@ public class NovaAtividade extends Activity {
 				EditText desc = (EditText) findViewById(R.id.edit_description);
 				String descStr = desc.getText() != null ? desc.getText().toString() : "";
 				
+				if (dateStr.trim().isEmpty() || descStr.trim().isEmpty()) {
+					Toast.makeText(getApplicationContext(), "Preencha os campos acima! E cozinha menos!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				
 				Toast.makeText(getApplicationContext(), "Date: " + dateStr + "\nDesc: " + descStr, Toast.LENGTH_SHORT).show();
 				finish();
 			}
