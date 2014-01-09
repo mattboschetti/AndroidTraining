@@ -13,7 +13,6 @@ public class MainActivity extends Activity {
 
 	private int started;
 	private int stopped;
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +31,13 @@ public class MainActivity extends Activity {
 				detailsIntent.putExtra("user", user);
 				detailsIntent.putExtra("pwd", pwd);
 				startActivity(detailsIntent);
+				finish();
 			}
 		});
 		started = 1;
 		stopped = 1;
 	}
-
+	
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub

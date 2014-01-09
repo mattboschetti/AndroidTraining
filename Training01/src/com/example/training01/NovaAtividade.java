@@ -25,6 +25,7 @@ public class NovaAtividade extends Activity {
 				String descStr = desc.getText() != null ? desc.getText().toString() : "";
 				
 				Toast.makeText(getApplicationContext(), "Date: " + dateStr + "\nDesc: " + descStr, Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		});
 	}
