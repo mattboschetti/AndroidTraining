@@ -37,11 +37,11 @@ public class LoginActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				String user = getEditTextFieldValue(R.id.txtUser);
-				String pwd = getEditTextFieldValue(R.id.txtPassword);
+				String user = UIUtils.getEditTextFieldValue(R.id.txtUser, getActivity());
+				String pwd = UIUtils.getEditTextFieldValue(R.id.txtPassword, getActivity());
 				
-				if (!validateUserAndPassword(user, pwd)) {
-					toast("Invalid user or password, try again! Tentative: " + loginRetries);
+				if (!UserData.validateUserAndPassword(user, pwd, getActivity())) {
+					UIUtils.toast("Invalid user or password, try again! Tentative: " + loginRetries, getApplicationContext());
 					loginRetries++;
 					return;
 				}
@@ -56,51 +56,14 @@ public class LoginActivity extends Activity {
 		});
 	}
 	
-	private boolean validateUserAndPassword(String user, String password) {
-		try {
-			FileInputStream fileRead = openFileInput(LoginUtils.USER_DETAILS_FILE);
-			int content;
-			StringBuffer sb = new StringBuffer();
-			try {
-				while ((content = fileRead.read()) != -1) {
-					sb.append(Character.toString((char) content));
-				}
-				//toast(sb.toString());
-				String[] userData = sb.toString().split(",");
-				return userData[0].equals(user) && userData[1].equals(password);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			try {
-				FileOutputStream fileWrite = openFileOutput(LoginUtils.USER_DETAILS_FILE, MODE_PRIVATE);
-				fileWrite.write((user + "," + password).getBytes());
-				return true;
-			} catch (FileNotFoundException e1) {
-				toast(e1.getMessage());
-			} catch (IOException e1) {
-				toast(e1.getMessage());
-			}
-		}
-		return false;
-	}
-	
-	private String getEditTextFieldValue(int id) {
-		EditText editText = (EditText) findViewById(id);
-		return editText.getText() != null ? editText.getText().toString() : "";
-	}
-	
-	private void setEditTextFieldValue(int id, String value) {
-		EditText txtUser = (EditText) findViewById(id);
-		txtUser.setText(value);
+	private final Activity getActivity() {
+		return this;
 	}
 	
 	private void fillUserAndPasswordControls() {
 		Map<String, String> userAndPassword = loadUserAndPassword();
-		setEditTextFieldValue(R.id.txtUser, userAndPassword.get(LoginUtils.USER_KEY));
-		setEditTextFieldValue(R.id.txtPassword, userAndPassword.get(LoginUtils.PASSWORD_KEY));
+		UIUtils.setEditTextFieldValue(R.id.txtUser, userAndPassword.get(LoginUtils.USER_KEY), this);
+		UIUtils.setEditTextFieldValue(R.id.txtPassword, userAndPassword.get(LoginUtils.PASSWORD_KEY), this);
 	}
 	
 	private void saveUserAndPassword(String user, String pwd) {
@@ -145,9 +108,4 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-	private void toast(String text) {
-		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
-	}
-
 }
