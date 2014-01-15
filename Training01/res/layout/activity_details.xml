@@ -35,5 +35,12 @@
         android:layout_below="@+id/viewHoursTotal"
         android:layout_toRightOf="@+id/buttonAdicionarAtividades"
         android:text="@string/button_close_app" />
+    
+    <ListView android:id="@+id/listView"
+        android:layout_below="@+id/buttonFecharAplicacao"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical">
+    </ListView>
 
 </RelativeLayout>

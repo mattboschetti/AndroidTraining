@@ -1,6 +1,7 @@
 package com.example.training01;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -10,6 +11,10 @@ import android.widget.Toast;
 
 public class NewTask extends Activity {
 
+	private final Context getContext() {
+		return getApplicationContext();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +33,8 @@ public class NewTask extends Activity {
 					return;
 				}
 				
-				Toast.makeText(getApplicationContext(), "Date: " + dateStr + "\nDesc: " + descStr, Toast.LENGTH_SHORT).show();
+				new TaskDAO().saveData(getContext(), dateStr, descStr);
+				
 				finish();
 			}
 		});

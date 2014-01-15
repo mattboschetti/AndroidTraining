@@ -1,11 +1,18 @@
 package com.example.training01;
 
-import android.os.Bundle;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class Details extends Activity {
@@ -39,6 +46,14 @@ public class Details extends Activity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		TaskDAO dao = new TaskDAO();
+		List<String> all = dao.listAll(getApplicationContext());
+		fillTaskList(all);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,5 +61,40 @@ public class Details extends Activity {
 		getMenuInflater().inflate(R.menu.details, menu);
 		return true;
 	}
+	
+	private void fillTaskList(List<String> tasks) {
+        ListView mDrawerList = (ListView) findViewById(R.id.listView);
+        mDrawerList.setAdapter(new TaskAdapter(getBaseContext(), R.layout.task_item, tasks));
+	}
+	
+	public class TaskAdapter extends ArrayAdapter<String> {
+
+        private List<String> itens;
+
+        public TaskAdapter(Context context, int textViewResourceId, List<String> itens) {
+                super(context, textViewResourceId, itens);
+                this.itens = itens;        
+        }
+
+        @Override
+        public int getCount() {
+                return itens.size();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+                View gridView = convertView;
+                if (convertView == null) { // if it's not recycled, initialize some
+                        // attributes
+                        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        gridView = inflater.inflate(R.layout.task_item, parent, false);
+                }
+                String task = itens.get(position);
+                ((TextView) gridView.findViewById(R.id.the_task_item)).setText(task);
+                return gridView;
+        }
+
+	}
+
 
 }
