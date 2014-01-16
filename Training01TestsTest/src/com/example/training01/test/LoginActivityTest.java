@@ -6,13 +6,13 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.example.training01.LoginActivity;
 import com.example.training01.LoginFragment;
 
-public class DetailActivityTest extends ActivityInstrumentationTestCase2<LoginActivity> {
+public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
-	public DetailActivityTest(Class<LoginActivity> activityClass) {
+	public LoginActivityTest(Class<LoginActivity> activityClass) {
 		super(activityClass);
 	}
 	
-	public DetailActivityTest() {
+	public LoginActivityTest() {
 		super(LoginActivity.class);
 	}
 
