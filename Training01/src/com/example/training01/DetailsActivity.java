@@ -2,10 +2,13 @@ package com.example.training01;
 
 import java.util.List;
 
+import com.example.training01.NewTaskFragment.OnAddTaskListener;
+
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -15,7 +18,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class Details extends Activity {
+public class DetailsActivity extends FragmentActivity implements OnAddTaskListener {
+	
+	@Override
+	public void onTaskAdd() {
+		UIUtils.hideShowComponent(R.id.new_task_container, View.INVISIBLE, getActivity());
+		UIUtils.hideShowComponent(R.id.listView, View.VISIBLE, getActivity());
+		loadListViewData();
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +41,15 @@ public class Details extends Activity {
 		TextView hoursTotal = (TextView) findViewById(R.id.viewHoursTotal);
 		hoursTotal.setText("Total de horas do mes eh: " + pwd.length());
 		
+		openNewTaskFragment();
+		
 		findViewById(R.id.buttonAdicionarAtividades).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intentNovaActivity = new Intent(getBaseContext(), NewTask.class);
-				startActivity(intentNovaActivity);
+				UIUtils.hideShowComponent(R.id.new_task_container, View.VISIBLE, getActivity());
+				UIUtils.hideShowComponent(R.id.listView, View.INVISIBLE, getActivity());
+//				Intent intentNovaActivity = new Intent(getBaseContext(), NewTask.class);
+//				startActivity(intentNovaActivity);
 			}
 		});
 		
@@ -47,9 +61,23 @@ public class Details extends Activity {
 		});
 	}
 	
+	private final Activity getActivity() {
+		return this;
+	}
+	
+	private void openNewTaskFragment() {
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.new_task_container, new NewTaskFragment(), "newTaskFragment");
+		transaction.commit();
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
+		loadListViewData();
+	}
+
+	private void loadListViewData() {
 		TaskDAO dao = new TaskDAO();
 		List<String> all = dao.listAll(getApplicationContext());
 		fillTaskList(all);

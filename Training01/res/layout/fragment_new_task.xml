@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:paddingTop="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_date" />
+    
+    <EditText
+        android:id="@+id/edit_date"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/text_view_date" >
+    </EditText>
+    
+    <TextView
+        android:id="@+id/text_view_description"
+        android:paddingTop="103dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_description"
+        android:layout_below="@+id/text_view_date" />
+    
+    <EditText
+        android:id="@+id/edit_description"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_date"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:layout_toRightOf="@+id/text_view_description" >
+    </EditText>
+
+    <Button
+        android:id="@+id/button_save_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_description"
+        android:text="@string/button_save_activity" />
+
+</RelativeLayout>

@@ -27,4 +27,9 @@ public class UIUtils {
 		txtUser.setText(value);
 	}
 	
+	public static void hideShowComponent(int component, int visibility, Activity activity) {
+		View view = (View) activity.findViewById(component);
+		view.setVisibility(visibility);
+	}
+	
 }

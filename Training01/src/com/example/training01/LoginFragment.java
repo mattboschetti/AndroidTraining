@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
 				}
 				saveUserAndPassword(user, pwd);
 				
-				Intent detailsIntent = new Intent(getActivity().getBaseContext(), Details.class);
+				Intent detailsIntent = new Intent(getActivity().getBaseContext(), DetailsActivity.class);
 				detailsIntent.putExtra(LoginUtils.USER_KEY, user);
 				detailsIntent.putExtra(LoginUtils.PASSWORD_KEY, pwd);
 				

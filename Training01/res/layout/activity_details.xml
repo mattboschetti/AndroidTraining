@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Details" >
+    tools:context=".DetailsActivity" >
 
     <TextView
         android:id="@+id/viewDetailsContent"
@@ -42,5 +42,12 @@
         android:layout_height="fill_parent"
         android:scrollbars="vertical">
     </ListView>
+    
+    <FrameLayout 
+	    android:id="@+id/new_task_container"
+	    android:layout_below="@+id/buttonFecharAplicacao"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:visibility="invisible" />
 
 </RelativeLayout>
